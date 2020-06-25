@@ -2,12 +2,14 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom";
+import { MainPage } from "./js/components/MainPage.jsx"
 
 const App = () => {
     return (
-        <div styleName="container">
-          <div styleName="header">
+        <div className="container">
+          <div className="header">
               {console.log("Hello, World!")}
+              <MainPage / >
           </div>
         </div>
       );
