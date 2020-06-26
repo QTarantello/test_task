@@ -8,7 +8,6 @@ const App = () => {
     return (
         <div className="container">
           <div className="header">
-              {console.log("Hello, World!")}
               <MainPage / >
           </div>
         </div>
