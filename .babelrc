@@ -1,11 +1,19 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": "3.6",
+        "modules": "commonjs"
+      }
+    ]
+  ],
   "plugins": [
     [
-      "@babel/plugin-proposal-class-properties",
-      {
-        "loose": true
-      }
+      "react-css-modules",
+      { "context": "./src", "generateScopedName": "[local]-[hash:base64]" }
     ]
   ]
 }

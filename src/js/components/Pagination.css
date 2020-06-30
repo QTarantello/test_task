@@ -1,0 +1,18 @@
+.pagination {
+    font-size: 24pt;
+    margin-left: 100px;
+    display: inline-block;
+}
+
+.page {
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+}
+
+.active-page { 
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+    color: blue;
+}
