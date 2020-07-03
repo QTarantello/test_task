@@ -3,24 +3,10 @@ import axios from "axios";
 import { Repos } from "./Repos.jsx"
 import { Pagination } from './Pagination.jsx'
 import { Filters } from './Filters.jsx'
+import { Repository } from './Repository.jsx'
 import "./MainPage.css"
 
 const apiBaseUrl = "https://api.github.com/search/repositories?q=stars%3A%3E0&sort=stars&order=desc&";
-
-const Repository = (props) => {
-  const { repository } = props;
-  const { name, id, stargazers_count, updated_at } = repository;
-
-  return (
-    <div className="repository">
-      <button className="back">Back</button>
-        <div>{name}</div>
-        <div>{id}</div>
-        <div>{stargazers_count}</div>
-        <div>{updated_at}</div>
-    </div>
-  );
-}
 
 export const MainPage = () => {
   
@@ -63,7 +49,7 @@ const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
 const currentRepos = repos.slice(indexOfFirstRepo, indexOfLastRepo);
 
 const repositories = repos.map(repository => (
-  <Repository repository={repository} key={repository.id}/>
+  <Repository repository={repository} key={repository.id} changeIsList={changeIsList}/>
 ))
 
 

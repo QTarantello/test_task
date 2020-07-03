@@ -8,11 +8,14 @@
     list-style-type: none;
     display: inline-block;
     margin: 10px;
+    cursor: pointer;
 }
 
 .active-page { 
     list-style-type: none;
     display: inline-block;
     margin: 10px;
-    color: blue;
+    color: purple;
+    cursor: pointer;
+    border-bottom: 2px solid purple;
 }
