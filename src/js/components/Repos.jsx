@@ -14,16 +14,18 @@ export const Repos = (props) => {
         <li key={repo.id}>
         <div styleName='name' onClick={click}>{repo.name}</div>
             <div styleName='elements'>
-            <img src="images/star.png" styleName='star'></img>
+            <div>
+            <a id='link' href={link}>
+               <img src="images/github.jpg" styleName='github'></img>
+            </a>
+            </div>
                 <div styleName='score'>
+                <img src="images/star.png" styleName='star'></img>
                     {repo.stargazers_count}
                 </div>
                 <div styleName='commit'>Last commit: {finalDate}</div>
             </div>
         </li>
-        <a id='link' href={link}>
-            <img src="images/github.jpg" styleName='github'></img>
-        </a>
         </div>
     </ul>
     )
