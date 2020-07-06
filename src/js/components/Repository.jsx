@@ -6,7 +6,8 @@ import _ from "lodash";
 export const Repository = (props) => {
     const { repository, changeIsList } = props;
     const { 
-      name, 
+      name,
+      id, 
       stargazers_count, 
       updated_at, 
       description, 
@@ -51,45 +52,50 @@ export const Repository = (props) => {
       changeIsList(true)
     }
 
-    const languages = lang.map(item => (
+    const language = lang.map(item => (
       <ul>
-        <li>{item}</li>
+        <li key={id}>{item}</li>
       </ul>
     ))
-
-    const titleForLang = lang.length === 0 ? null : <h3>Languages</h3>;
 
     const contributor = contributors.map(item => (
       <ul>
-        <li>{item.login}</li>
+        <li key={id}>{item.login}</li>
       </ul>
     ))
-  
+
+    const languagesList = language.length === 0 ? <div>None</div> : language;
+    const contributorsList = contributor.length === 0 ? <div>None</div> : contributor;
+
     return (
-      <div>
-        <button className="back" onClick={onClick}>Back</button>
+      <div styleName='container'>
+        <button styleName="back" onClick={onClick}>Back</button>
           <h1 styleName='title'>{name}</h1>
-          <div>{login}</div>
-        <div styleName='mainInfo'>
-          <div styleName='score'>
-          <img src="images/star.png" styleName='star'></img>
-            {stargazers_count}
-            </div>
-          <div styleName='commit'>Last commit: {finalDate}</div>
-      </div>
-      <div styleName='owner'>
-          <div><img src={avatar} styleName='avatar'></img></div>
-          <div styleName='languages'>
-          {titleForLang}
-          {languages}</div>
-          <div styleName='contributor'>
-            <h3>Contributors</h3>
-            {contributor}
-            </div>
+          <div styleName='login'>{login}</div>
+          <div styleName='mainInfo'>
+              <div styleName='score'>
+                <img src="images/star.png" styleName='star'></img>
+                {stargazers_count}
+              </div>
+              <div styleName='commit'>Last commit: {finalDate}</div>
+          </div>
+        <div styleName='owner'>
+            <div><img src={avatar} styleName='avatar'></img></div>
             <div styleName='description'>
+              <h3>Description</h3>
               {description}
             </div>
-      </div>
+        </div>
+        <div styleName='list'>
+            <div>
+              <h3>Languages</h3>
+              <div>{languagesList}</div>
+            </div>
+            <div>
+              <h3>Contributors</h3>
+              <div>{contributorsList}</div>
+            </div>
+        </div> 
       </div>
     );
   }

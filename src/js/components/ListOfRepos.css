@@ -1,3 +1,7 @@
+.list {
+    margin-top: 20px;
+}
+
 .item {
     list-style-type: none;
 }
@@ -6,7 +10,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: baseline;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-bottom: 10px;
 }
 
@@ -16,7 +19,6 @@
     font-size: 20pt;
     margin-bottom: 10px;
     cursor: pointer;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .commit {

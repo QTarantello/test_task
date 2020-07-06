@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Repos } from "./Repos.jsx"
+import { ListOfRepos } from "./ListOfRepos.jsx"
 import { Pagination } from './Pagination.jsx'
 import { Filters } from './Filters.jsx'
 import { Repository } from './Repository.jsx'
@@ -15,7 +15,9 @@ export const MainPage = () => {
     localStorage.getItem('pageNumberLocalStorage' || 1)
   );
   const [reposPerPage] = React.useState(10);
-  const [isList, changeIsList] = React.useState(true);
+  const [isList, changeIsList] = React.useState(
+    true
+  );
   const [id, setId] = React.useState(0);
   const [title, setTitle] = React.useState(
     localStorage.getItem('titleLocalStorage' || '')
@@ -36,9 +38,6 @@ React.useEffect(() => {
   }))
 }, [title, repos])
 
-console.log(repos)
-
-
 React.useEffect(() => {
   localStorage.getItem('titleLocalStorage', title)
   localStorage.getItem('pageNumberLocalStorage', currentPage)
@@ -48,14 +47,9 @@ const indexOfLastRepo = currentPage * reposPerPage;
 const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
 const currentRepos = repos.slice(indexOfFirstRepo, indexOfLastRepo);
 
-const repositories = repos.map(repository => (
-  <Repository repository={repository} key={repository.id} changeIsList={changeIsList}/>
-))
-
-
 const paginate = (pageNumber) => {
-setCurrentPage(pageNumber);
-localStorage.setItem('pageNumberLocalStorage', pageNumber);
+  setCurrentPage(pageNumber);
+  localStorage.setItem('pageNumberLocalStorage', pageNumber);
 }
 
 const handleClick = (id) => (event) => {
@@ -68,37 +62,35 @@ const onChange = (value) => (event) => {
   localStorage.setItem('titleLocalStorage', event.target.value)
 }
 
-const mainPage = (
-      <div>
-        <h1>Main Page</h1>
-        <Filters onChange={onChange(title)} value={title}/>
-        {currentRepos.map(repo => (
-          <Repos 
-          repo={repo} 
-          click={handleClick(repo.id)} 
-          />
-        ))}
-        <Pagination reposPerPage={reposPerPage} totalRepos={repos.length} paginate={paginate} activePage={currentPage} />
-      </div>
-    )
+const repositories = repos.map(repository => (
+  <Repository repository={repository} key={repository.id} changeIsList={changeIsList}/>
+))
 
-const mainPageWithFilter = (
+const listOfElements = (
   <div>
-        <h1>Main Page</h1>
-        <Filters onChange={onChange(title)} value={title}/>
-        {filteredRepos.map(repo => (
-          <Repos 
-          repo={repo} 
-          click={handleClick(repo.id)} 
-          />
-        ))}
-      </div>
+      <h1>Top GitHub Repositories</h1>
+      <Filters onChange={onChange(title)} value={title}/>
+      {currentRepos.map(repo => (
+      <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)}/>
+    ))}
+      <Pagination reposPerPage={reposPerPage} totalRepos={repos.length} paginate={paginate} activePage={currentPage} />
+  </div>
+)
+
+const listOfElementsWithFilter = (
+  <div>
+      <h1>Top GitHub Repositories</h1>
+      <Filters onChange={onChange(title)} value={title}/>
+      {filteredRepos.map(repo => (
+      <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)}/>
+    ))}
+  </div>
 )
 
 if (isList === true && title === '') {
-  return mainPage;
+  return listOfElements;
 } else if (isList === true && title !== '') {
-  return mainPageWithFilter
+  return listOfElementsWithFilter;
 } else if (isList === false) {
   return repositories.find(element => id === element.key);
  }

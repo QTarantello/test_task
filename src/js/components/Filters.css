@@ -1,0 +1,9 @@
+.form-control {
+    margin-left: 10px;
+    width: 385px;
+    border-style: 1px solid gray;
+}
+
+.search {
+    margin-top: 50px;
+}

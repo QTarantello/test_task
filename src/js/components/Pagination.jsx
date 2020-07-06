@@ -12,18 +12,17 @@ export const Pagination = (props) => {
 
     const mapedPage = pageNumbers.map((number)=> {
         const classStyle = cn({
-            page: true,
-            "active-page": activePage === number,
+            page: activePage !== number,
+            "active": activePage === number,
           });
           
-        const result = (
+        return (
         <div styleName={classStyle}> 
-        <li key={number} onClick={() => paginate(number)}>
-            {number}
-        </li>
+            <li key={number} onClick={() => paginate(number)}>
+                {number}
+            </li>
         </div>
         )
-        return result;
     })
 
     return (

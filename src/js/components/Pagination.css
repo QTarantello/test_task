@@ -1,7 +1,6 @@
 .pagination {
     font-size: 24pt;
     margin-left: 100px;
-    display: inline-block;
 }
 
 .page {
@@ -11,11 +10,11 @@
     cursor: pointer;
 }
 
-.active-page { 
+.active { 
     list-style-type: none;
     display: inline-block;
     margin: 10px;
-    color: purple;
+    color: gray;
     cursor: pointer;
-    border-bottom: 2px solid purple;
-}
+    border-bottom: 2px solid gray;
+} 

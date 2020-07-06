@@ -1,8 +1,14 @@
 .container {
     width: 80%;
     margin: 0 auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
   
 .header {
     padding: 5px;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
 }
