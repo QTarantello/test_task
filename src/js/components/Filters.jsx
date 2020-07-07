@@ -7,8 +7,8 @@ export const Filters = (props) => {
     return (
         <div styleName="search">
             <form>
-            <label>Search</label>
-            <input type="text" styleName="form-control" onChange={onChange} value={value}/>
+                <label>Search</label>
+                <input type="text" styleName="form-control" onChange={onChange} value={value} />
             </form>
         </div>
     );

@@ -10,26 +10,26 @@ export const Pagination = (props) => {
         pageNumbers.push(i);
     }
 
-    const mapedPage = pageNumbers.map((number)=> {
+    const mapedPage = pageNumbers.map((number) => {
         const classStyle = cn({
             page: activePage !== number,
             "active": activePage === number,
-          });
-          
+        });
+
         return (
-        <div styleName={classStyle}> 
-            <li key={number} onClick={() => paginate(number)}>
-                {number}
-            </li>
-        </div>
+            <div styleName={classStyle}>
+                <li key={number} onClick={() => paginate(number)}>
+                    {number}
+                </li>
+            </div>
         )
     })
 
     return (
-    <div styleName="pagination">
-        <ul> 
-       {mapedPage}
-        </ul>
-    </div>
+        <div styleName="pagination">
+            <ul>
+                {mapedPage}
+            </ul>
+        </div>
     )
 }
