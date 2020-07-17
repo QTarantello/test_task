@@ -26,26 +26,24 @@ export const Repository = (props) => {
   const finalDate = date + ' ' + `(${time})`;
 
   React.useEffect(() => {
-    const fetchLang = async () => {
+    const fetchData = async () => {
       const resLang = await axios.get(languages_url);
-      const data = resLang.data;
-      const languages = Object.keys(data);
-      setLang(languages);
-    }
-    fetchLang();
-  }, [])
-
-  React.useEffect(() => {
-    const fetchContr = async () => {
       const resContr = await axios.get(contributors_url)
-      const data = resContr.data;
-      const result = []
-      for (let i = 0; i < 10; i++) {
-        result.push(data[i])
-      }
+
+      const dataLang = resLang.data;
+      const languages = Object.keys(dataLang);
+      setLang(languages);
+
+      const dataContr = resContr.data;
+      const result = [];
+      dataContr.forEach((element, index) => {
+        if (index < 10) {
+          result.push(element)
+        }
+      })
       setContributors(result)
     }
-    fetchContr();
+    fetchData();
   }, [])
 
   const onClick = (e) => {

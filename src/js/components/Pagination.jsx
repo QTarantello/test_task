@@ -17,8 +17,8 @@ export const Pagination = (props) => {
         });
 
         return (
-            <div styleName={classStyle}>
-                <li key={number} onClick={() => paginate(number)}>
+            <div key={number} styleName={classStyle}>
+                <li onClick={() => paginate(number)}>
                     {number}
                 </li>
             </div>

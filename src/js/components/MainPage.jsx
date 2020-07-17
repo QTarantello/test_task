@@ -6,7 +6,11 @@ import { Filters } from './Filters.jsx'
 import { Repository } from './Repository.jsx'
 import "./MainPage.css"
 
-const apiBaseUrl = "https://api.github.com/search/repositories?q=stars%3A%3E0&sort=stars&order=desc&";
+const apiTopReposUrl = "https://api.github.com/search/repositories?q=stars%3A%3E0&sort=stars&order=desc&page=1&per_page=10";
+
+const apiBaseUrl = (query) => `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc`;
+
+const reposPerPage = 10;
 
 export const MainPage = () => {
 
@@ -16,28 +20,35 @@ export const MainPage = () => {
   const localStorageTitle = localStorage.getItem('titleLocalStorage')
   const initinalStateForTitle = localStorageTitle === null ? '' : localStorageTitle;
 
-  const [repos, setRepos] = React.useState([]);
+  const [topRepos, setTopRepos] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(initinalStateForPage);
-  const [reposPerPage] = React.useState(10);
   const [isList, changeIsList] = React.useState(true);
-  const [id, setId] = React.useState(0);
+  const [id, setId] = React.useState(null);
   const [title, setTitle] = React.useState(initinalStateForTitle);
+  const [searchRepos, setSearchRepos] = React.useState([]);
+
 
   React.useEffect(() => {
     const fetchRepos = async () => {
-      const res = await axios.get(apiBaseUrl);
-      setRepos(res.data.items);
+      const res = await axios.get(apiTopReposUrl);
+      setTopRepos(res.data.items);
     }
     fetchRepos();
   }, [])
 
+  React.useEffect(() => {
+    if (title !== '') {
+      const fetchRepos = async () => {
+        const res = await axios.get(apiBaseUrl(title));
+        setSearchRepos(res.data.items);
+      }
+      fetchRepos();
+    }
+  }, [title])
+
   const indexOfLastRepo = currentPage * reposPerPage;
   const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
-  const currentRepos = repos.slice(indexOfFirstRepo, indexOfLastRepo);
-
-  const filteredRepos = repos.filter(repo => {
-    return repo.name.toLowerCase().includes(title.toLowerCase())
-  })
+  const currentRepos = searchRepos.slice(indexOfFirstRepo, indexOfLastRepo);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -45,7 +56,7 @@ export const MainPage = () => {
   }
 
   const handleClick = (id) => (event) => {
-    setId(`${id}`)
+    setId(id)
     changeIsList(false);
   }
 
@@ -54,36 +65,32 @@ export const MainPage = () => {
     localStorage.setItem('titleLocalStorage', event.target.value)
   }
 
-  const repositories = repos.map(repository => (
-    <Repository repository={repository} key={repository.id} changeIsList={changeIsList} />
-  ))
-
-  const listOfElements = (
-    <div>
-      <h1>Top GitHub Repositories</h1>
-      <Filters onChange={onChange(title)} value={title} />
-      {currentRepos.map(repo => (
-        <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)} />
-      ))}
-      <Pagination reposPerPage={reposPerPage} totalRepos={repos.length} paginate={paginate} activePage={currentPage} />
-    </div>
-  )
-
-  const listOfElementsWithFilter = (
-    <div>
-      <h1>Top GitHub Repositories</h1>
-      <Filters onChange={onChange(title)} value={title} />
-      {filteredRepos.map(repo => (
-        <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)} />
-      ))}
-    </div>
-  )
-
-  if (isList === true && title === '') {
-    return listOfElements;
-  } else if (isList === true && title !== '') {
-    return listOfElementsWithFilter;
-  } else if (isList === false) {
-    return repositories.find(element => id === element.key);
+  if (isList && title === '') {
+    return (
+      <div>
+        <h1>Top GitHub Repositories</h1>
+        <Filters onChange={onChange(title)} value={title} />
+        {topRepos.map(repo => (
+          <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)} />
+        ))}
+      </div>
+    );
+  } else if (isList) {
+    return (
+      <div>
+        <h1>Top GitHub Repositories</h1>
+        <Filters onChange={onChange(title)} value={title} />
+        {currentRepos.map(repo => (
+          <ListOfRepos key={repo.id} repo={repo} click={handleClick(repo.id)} />
+        ))}
+        <Pagination reposPerPage={reposPerPage} totalRepos={searchRepos.length} paginate={paginate} activePage={currentPage} />
+      </div>
+    );
+  } else if (title === '') {
+    const repository = topRepos.find(repo => id === repo.id)
+    return <Repository repository={repository} key={repository.id} changeIsList={changeIsList} />
+  } else {
+    const repository = currentRepos.find(repo => id === repo.id)
+    return <Repository repository={repository} key={repository.id} changeIsList={changeIsList} />
   }
 }
