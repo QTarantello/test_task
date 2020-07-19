@@ -1,13 +1,13 @@
-import React from "react";
-import axios from "axios";
-import { ListOfRepos } from "./ListOfRepos.jsx";
+import React from 'react';
+import axios from 'axios';
+import { ListOfRepos } from './ListOfRepos.jsx';
 import { Pagination } from './Pagination.jsx';
 import { Filters } from './Filters.jsx';
 import { Repository } from './Repository.jsx';
-import "./MainPage.css";
+import './MainPage.css';
 import _ from "lodash";
 
-const apiTopReposUrl = "https://api.github.com/search/repositories?q=stars%3A%3E0&sort=stars&order=desc&page=1&per_page=10";
+const apiTopReposUrl = 'https://api.github.com/search/repositories?q=stars%3A%3E0&sort=stars&order=desc&page=1&per_page=10';
 
 const apiBaseUrl = (query) => `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc`;
 

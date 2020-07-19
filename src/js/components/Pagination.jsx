@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Pagination.css";
+import './Pagination.css';
 import cn from 'classnames';
 
 export const Pagination = (props) => {
@@ -26,7 +26,7 @@ export const Pagination = (props) => {
     })
 
     return (
-        <div styleName="pagination">
+        <div styleName='pagination'>
             <ul>
                 {mapedPage}
             </ul>

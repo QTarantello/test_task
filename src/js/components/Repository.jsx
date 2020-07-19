@@ -1,7 +1,7 @@
 import React from 'react';
-import "./Repository.css";
-import axios from "axios";
-import _ from "lodash";
+import './Repository.css';
+import axios from 'axios';
+import _ from 'lodash';
 
 export const Repository = (props) => {
   const { repository, changeIsList } = props;
@@ -76,12 +76,12 @@ export const Repository = (props) => {
 
   return (
     <div styleName='container'>
-      <button styleName="back" onClick={onClick}>Back</button>
+      <button styleName='back' onClick={onClick}>Back</button>
       <h1 styleName='title'>{name}</h1>
       <div styleName='login'>{login}</div>
       <div styleName='mainInfo'>
         <div styleName='score'>
-          <img src="images/star.png" styleName='star'></img>
+          <img src='images/star.png' styleName='star'></img>
           {stargazers_count}
         </div>
         <div styleName='commit'>Last commit: {finalDate}</div>

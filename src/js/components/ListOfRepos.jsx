@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import './ListOfRepos.css';
 
 export const ListOfRepos = (props) => {
