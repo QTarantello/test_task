@@ -7,7 +7,6 @@ export const Repository = (props) => {
   const { repository, changeIsList } = props;
   const {
     name,
-    id,
     stargazers_count,
     updated_at,
     description,
@@ -26,13 +25,16 @@ export const Repository = (props) => {
   const finalDate = date + ' ' + `(${time})`;
 
   React.useEffect(() => {
+    let cleanupFunction = false;
     const fetchData = async () => {
       const resLang = await axios.get(languages_url);
       const resContr = await axios.get(contributors_url)
 
       const dataLang = resLang.data;
       const languages = Object.keys(dataLang);
-      setLang(languages);
+      if (!cleanupFunction) {
+        setLang(languages);
+      }
 
       const dataContr = resContr.data;
       const result = [];
@@ -41,9 +43,12 @@ export const Repository = (props) => {
           result.push(element)
         }
       })
-      setContributors(result)
+      if (!cleanupFunction) {
+        setContributors(result);
+      }
     }
     fetchData();
+    return () => cleanupFunction = true;
   }, [])
 
   const onClick = (e) => {
@@ -51,15 +56,19 @@ export const Repository = (props) => {
   }
 
   const language = lang.map(item => (
-    <ul>
-      <li key={id}>{item}</li>
-    </ul>
+    <div key={_.uniqueId()}>
+      <ul>
+        <li>{item}</li>
+      </ul>
+    </div>
   ))
 
   const contributor = contributors.map(item => (
-    <ul>
-      <li key={id}>{item.login}</li>
-    </ul>
+    <div key={_.uniqueId()}>
+      <ul>
+        <li>{item.login}</li>
+      </ul>
+    </div>
   ))
 
   const languagesList = language.length === 0 ? <div>None</div> : language;
@@ -87,11 +96,11 @@ export const Repository = (props) => {
       <div styleName='list'>
         <div>
           <h3>Languages</h3>
-          <div>{languagesList}</div>
+          {languagesList}
         </div>
         <div>
           <h3>Contributors</h3>
-          <div>{contributorsList}</div>
+          {contributorsList}
         </div>
       </div>
     </div>

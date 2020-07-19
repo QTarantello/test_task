@@ -37,6 +37,7 @@
     "react-redux": "^7.2.0",
     "regenerator-runtime": "^0.13.5",
     "store": "^2.0.12",
+    "use-lodash-debounce": "^1.1.0",
     "use-persisted-state": "^0.3.0"
   }
 }
